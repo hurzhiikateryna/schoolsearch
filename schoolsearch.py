@@ -58,6 +58,14 @@ def search_teacher(students: list[Student], last_name: str) -> list[Student]:
     ]
 
 
+def search_classroom(students: list[Student], classroom: int) -> list[Student]:
+    return [
+        student
+        for student in students
+        if student.classroom == classroom
+    ]
+
+
 def main():
     students = load_students("students.txt")
 
@@ -72,7 +80,7 @@ def main():
             print("Goodbye!")
             break
 
-        if command.upper().startswith("S:"):
+        elif command.upper().startswith("S:"):
             last_name = command[2:].strip().upper()
 
             results = search_student(students, last_name)
@@ -106,6 +114,27 @@ def main():
                     f"{student.last_name} {student.first_name} | "
                     f"Grade: {student.grade} | "
                     f"Classroom: {student.classroom}"
+                )
+
+        elif command.upper().startswith("C:"):
+            try:
+                classroom = int(command[2:].strip())
+            except ValueError:
+                print("Invalid classroom number.")
+                continue
+
+            results = search_classroom(students, classroom)
+
+            if not results:
+                print("No students found.")
+                continue
+
+            print(f"Students in classroom {classroom}:")
+
+            for student in results:
+                print(
+                    f"{student.last_name} {student.first_name} | "
+                    f"Grade: {student.grade}"
                 )
 
         else:
