@@ -66,6 +66,14 @@ def search_classroom(students: list[Student], classroom: int) -> list[Student]:
     ]
 
 
+def search_bus(students: list[Student], bus: int) -> list[Student]:
+    return [
+        student
+        for student in students
+        if student.bus == bus
+    ]
+
+
 def main():
     students = load_students("students.txt")
 
@@ -135,6 +143,28 @@ def main():
                 print(
                     f"{student.last_name} {student.first_name} | "
                     f"Grade: {student.grade}"
+                )
+
+        elif command.upper().startswith("B:"):
+            try:
+                bus = int(command[2:].strip())
+            except ValueError:
+                print("Invalid bus number.")
+                continue
+
+            results = search_bus(students, bus)
+
+            if not results:
+                print("No students found.")
+                continue
+
+            print(f"Students on bus {bus}:")
+
+            for student in results:
+                print(
+                    f"{student.last_name} {student.first_name} | "
+                    f"Grade: {student.grade} | "
+                    f"Classroom: {student.classroom}"
                 )
 
         else:
