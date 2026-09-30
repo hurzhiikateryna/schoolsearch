@@ -42,10 +42,74 @@ def load_students(filename: str) -> list[Student]:
     return students
 
 
+def search_student(students: list[Student], last_name: str) -> list[Student]:
+    return [
+        student
+        for student in students
+        if student.last_name == last_name
+    ]
+
+
+def search_teacher(students: list[Student], last_name: str) -> list[Student]:
+    return [
+        student
+        for student in students
+        if student.teacher_last_name == last_name
+    ]
+
+
 def main():
     students = load_students("students.txt")
 
+    print("Schoolsearch")
     print(f"Loaded students: {len(students)}")
+    print("Enter a command or Q to quit.")
+
+    while True:
+        command = input("> ").strip()
+
+        if command.upper() == "Q":
+            print("Goodbye!")
+            break
+
+        if command.upper().startswith("S:"):
+            last_name = command[2:].strip().upper()
+
+            results = search_student(students, last_name)
+
+            if not results:
+                print("Student not found.")
+                continue
+
+            for student in results:
+                print(
+                    f"{student.last_name} {student.first_name} | "
+                    f"Grade: {student.grade} | "
+                    f"Classroom: {student.classroom} | "
+                    f"Teacher: {student.teacher_last_name} "
+                    f"{student.teacher_first_name}"
+                )
+
+        elif command.upper().startswith("T:"):
+            last_name = command[2:].strip().upper()
+
+            results = search_teacher(students, last_name)
+
+            if not results:
+                print("Teacher not found.")
+                continue
+
+            print(f"Students of teacher {last_name}:")
+
+            for student in results:
+                print(
+                    f"{student.last_name} {student.first_name} | "
+                    f"Grade: {student.grade} | "
+                    f"Classroom: {student.classroom}"
+                )
+
+        else:
+            print("Invalid command.")
 
 
 if __name__ == "__main__":
