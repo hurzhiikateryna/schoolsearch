@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass
 import time
 
@@ -189,7 +188,7 @@ def main():
             print("bye!")
             break
 
-        # Видалення учня
+    
         if upper.startswith("D:"):
             parts = command[2:].strip().split(",", 1)
 
@@ -205,7 +204,7 @@ def main():
 
             continue
 
-        # Оновлення учня
+        
         if upper.startswith("U:"):
             parts = command[2:].strip().split(",", 1)
 
@@ -224,7 +223,7 @@ def main():
         formatter = None
 
         try:
-            # C: 104 T — учителі певного кабінету
+            
             if upper.startswith("C:") and upper.endswith(" T"):
                 classroom = int(command[2:-2].strip())
                 results = teachers_in_classroom(
@@ -234,7 +233,7 @@ def main():
                     f"{t.last_name}, {t.first_name}"
                 )
 
-            # G: 6 T — учителі, які навчають учнів цього рівня
+            
             elif upper.startswith("G:") and upper.endswith(" T"):
                 grade = int(command[2:-2].strip())
                 results = teachers_for_grade(
@@ -244,7 +243,7 @@ def main():
                     f"{t.last_name}, {t.first_name}"
                 )
 
-            # S: SMITH B — автобус учня
+            
             elif upper.startswith("S:") and upper.endswith(" B"):
                 name = command[2:-2].strip()
                 results = search_student(students, name)
@@ -252,7 +251,7 @@ def main():
                     f"{s.last_name}, {s.first_name}, {s.bus}"
                 )
 
-            # S: SMITH — кабінет та вчитель учня
+            
             elif upper.startswith("S:"):
                 name = command[2:].strip()
                 results = search_student(students, name)
@@ -275,7 +274,7 @@ def main():
                         f"{s.grade}, {s.classroom}"
                     )
 
-            # T: NIBLER — учні вчителя
+            
             elif upper.startswith("T:"):
                 name = command[2:].strip()
                 results = search_teacher(
@@ -285,7 +284,7 @@ def main():
                     f"{s.last_name}, {s.first_name}"
                 )
 
-            # C: 104 — учні кабінету
+            
             elif upper.startswith("C:"):
                 classroom = int(command[2:].strip())
                 results = search_classroom(students, classroom)
@@ -293,7 +292,7 @@ def main():
                     f"{s.last_name}, {s.first_name}"
                 )
 
-            # B: 53 — учні автобуса
+            
             elif upper.startswith("B:"):
                 bus = int(command[2:].strip())
                 results = search_bus(students, bus)
@@ -301,7 +300,7 @@ def main():
                     f"{s.last_name}, {s.first_name}"
                 )
 
-            # G: 6 — учні певного рівня
+            
             elif upper.startswith("G:"):
                 grade = int(command[2:].strip())
                 results = search_grade(students, grade)
@@ -315,7 +314,7 @@ def main():
         except ValueError:
             continue
 
-        # Вимірюємо час пошуку та виводимо результат
+        
         for item in results:
             print(formatter(item))
 
